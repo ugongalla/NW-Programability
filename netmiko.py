@@ -1,5 +1,5 @@
 from netmiko import ConnectHandler
-
+#ssh script to connect to device
 # Define the device parameters
 cisco_device = {
     'device_type': 'cisco_ios',      # Device platform
