@@ -1,0 +1,11 @@
+config vdom
+edit {{vdom_name}}
+config vpn ipsec phase1-interface
+edit "hub-{{site_name}}"
+set type static
+set interface "{{outgoing_interface}}"
+set remote-gw "{{remote_gateway}}"
+set psksecret {{psksecret}}
+next
+end
+end

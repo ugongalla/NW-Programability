@@ -1,0 +1,40 @@
+config vdom
+edit {{vdom_name}}
+config vpn ipsec phase1-interface
+edit "phase1_{{site_name}}"                            # vpn p1 name
+set type static
+set interface "{{outgoing_interface}}"                              # vpn interface
+set ike-version 2
+set comments "{{client_name}}" # comments
+set dhgrp 21
+set proposal aes256gcm-prfsha512
+set peertype any
+set remote-gw "{{remote_gateway_static_IP}}"                        # remote dialup_server_ip
+set psksecret {{psksecret}}
+set local-id "{{client_url}}"             # local dialup client url
+next
+end
+config vpn ipsec phase2-interface
+edit "{{vdom_name}}"                            # vpn phase2 name
+set phase1name "phase1_{{site_name}}"                  # vpn phase1 interface
+set proposal aes256gcm
+set dhgrp 21
+set keylifeseconds 28800
+set src-subnet 0.0.0.0 0.0.0.0
+set dst-subnet 0.0.0.0 0.0.0.0
+next
+end
+end
+config system interface
+edit "phase1_{{site_name}}"                            #p1 vpn interface name
+set vdom "{{vdom_name}}"
+set alias "phase1-{{site_name}}>"                   # vpn alias name
+set type tunnel
+set allowaccess ping ssh https fgfm snmp
+set interface "{{outgoing_interface}}"                              # associated physical interface
+set ip {{local_vpn_ip}}     # local tunnel IP
+set remote-ip {{remote_vpn_ip}}       # remote tunnel IP
+set status down
+next
+end
+end

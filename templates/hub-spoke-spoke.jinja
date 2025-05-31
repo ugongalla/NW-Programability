@@ -1,0 +1,11 @@
+config vdom
+edit {{vdom_name}}
+config vpn ipsec phase1-interface
+edit "spoke-{{site_name}}"
+set type dynamic
+set interface "{{outgoing_interface}}"
+set psksecret {{psksecret}}
+set peerid "{{hub_id}}"
+next
+end
+end
